@@ -1,8 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>URL</key>
-	<string>file:///Users/eimaanali/CS210%20JAVA%20CODE/MonteCarloPI.java</string>
-</dict>
-</plist>
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        // The number of discrete steps for the simulation
+        int N = 1000000;
+
+        double e = estimateE(N);
+        System.out.println("Estimated value of e: " + e);
+        System.out.println("Estimated error of PI: " + Math.abs(e - Math.E));
+
+        double pi = estimatePi(N);
+        System.out.println("Estimated value of PI: " + pi);
+        System.out.println("Estimated error of PI: " + Math.abs(pi - Math.PI));
+    }
+
+    // Method for estimating E with a double return value and one int parameter
+    private static double estimateE(int N) {
+        double factorial = 1;
+        double num = 1;
+        // Iteration for N amount of times
+        for (int i = 1; i < N; i++) {
+            // Generating random numbers and using logs
+            factorial *= i;
+            num += 1.0 / factorial;
+        }
+        // Return as a double
+        return num;
+    }
+
+    private static double estimatePi(int N) {
+        Random random = new Random();
+        int numSuccess = 0;
+        // Iteration for N amount of times
+        for (int i = 0; i < N; i++) {
+            // Generating random (x, y) points
+            double x = random.nextDouble();
+            double y = random.nextDouble();
+            if (x * x + y * y <= 1) {
+                numSuccess++;
+            }
+        }
+return 4.0 * numSuccess / N;
+    }
+}
